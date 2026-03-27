@@ -1,0 +1,242 @@
+[
+  {
+    "note_id": "note_001",
+    "classification": {
+      "urgency_level": 5,
+      "urgency_label": "EMERGENT",
+      "primary_complaint": "Acute ST-elevation myocardial infarction with cardiogenic shock",
+      "icd10_code": "I21.0",
+      "icd10_description": "ST elevation myocardial infarction involving left main coronary artery",
+      "reasoning": "Patient presents with classic STEMI findings: crushing chest pain with left arm radiation, diaphoresis, ST elevation V1-V4, and troponin I markedly elevated at 2.4. Hemodynamic instability with hypotension (88/56) and tachycardia (112) suggests cardiogenic shock. Prior CABG history increases complexity.",
+      "recommended_action": "Activate cardiac catheterization lab STAT for emergent PCI, initiate dual antiplatelet therapy, IV heparin bolus, vasopressor support for cardiogenic shock, continuous cardiac monitoring"
+    }
+  },
+  {
+    "note_id": "note_002",
+    "classification": {
+      "urgency_level": 5,
+      "urgency_label": "EMERGENT",
+      "primary_complaint": "Severe preeclampsia with features of HELLP syndrome",
+      "icd10_code": "O14.10",
+      "icd10_description": "Severe pre-eclampsia, unspecified trimester",
+      "reasoning": "32-week pregnant patient with severe hypertension (>160/110), significant proteinuria, thrombocytopenia (98K), elevated transaminases (AST 186, ALT 204), rising creatinine, and hyperreflexia with clonus. This constellation is consistent with severe preeclampsia progressing to HELLP syndrome, carrying significant maternal and fetal mortality risk.",
+      "recommended_action": "IV magnesium sulfate for seizure prophylaxis, IV antihypertensives (labetalol), betamethasone for fetal lung maturity, emergent MFM and NICU consultation, prepare for possible delivery within 24-48 hours"
+    }
+  },
+  {
+    "note_id": "note_003",
+    "classification": {
+      "urgency_level": 2,
+      "urgency_label": "LOW",
+      "primary_complaint": "Acute streptococcal pharyngitis",
+      "icd10_code": "J02.0",
+      "icd10_description": "Streptococcal pharyngitis",
+      "reasoning": "Well-appearing 8-year-old with classic strep pharyngitis: fever, tonsillar exudates, anterior cervical lymphadenopathy, confirmed by positive rapid strep test. No complications such as peritonsillar abscess, drooling, or respiratory distress. Straightforward case requiring outpatient antibiotic treatment.",
+      "recommended_action": "Prescribe amoxicillin 50mg/kg/day divided BID for 10 days, return precautions for worsening symptoms, difficulty swallowing, or respiratory distress"
+    }
+  },
+  {
+    "note_id": "note_004",
+    "classification": {
+      "urgency_level": 1,
+      "urgency_label": "ROUTINE",
+      "primary_complaint": "Type 2 diabetes mellitus, improving glycemic control",
+      "icd10_code": "E11.65",
+      "icd10_description": "Type 2 diabetes mellitus with hyperglycemia",
+      "reasoning": "Stable patient with well-managed type 2 diabetes showing improving A1C trend (7.6% to 7.1%). No diabetic complications on screening. Blood pressure at goal. This is a routine follow-up visit with no acute concerns.",
+      "recommended_action": "Continue current regimen, consider statin optimization for LDL 108, repeat A1C in 3 months, schedule routine follow-up in 3-6 months"
+    }
+  },
+  {
+    "note_id": "note_005",
+    "classification": {
+      "urgency_level": 5,
+      "urgency_label": "EMERGENT",
+      "primary_complaint": "Polytrauma with traumatic brain injury and hemorrhagic shock",
+      "icd10_code": "T07",
+      "icd10_description": "Unspecified multiple injuries",
+      "reasoning": "High-mechanism trauma (high-speed MVC, ejection, no helmet) with depressed GCS 9, asymmetric pupils (concerning for uncal herniation), Battle sign (basilar skull fracture), femur deformity, abdominal distension, and hemorrhagic shock (BP 82/50, HR 132). This patient has multiple immediately life-threatening injuries requiring emergent surgical intervention.",
+      "recommended_action": "Trauma team activation, massive transfusion protocol, emergent CT pan-scan, neurosurgery and trauma surgery consults, prepare for emergent craniotomy and possible exploratory laparotomy, maintain C-spine precautions"
+    }
+  },
+  {
+    "note_id": "note_006",
+    "classification": {
+      "urgency_level": 3,
+      "urgency_label": "MODERATE",
+      "primary_complaint": "Major depressive disorder, severe, without psychotic features",
+      "icd10_code": "F32.2",
+      "icd10_description": "Major depressive episode, severe without psychotic features",
+      "reasoning": "Meets DSM-5 criteria for major depressive disorder with severe symptoms (PHQ-9: 19). Significant functional impairment across multiple domains. Risk factors include social isolation, recent major stressor (divorce), and limited supports. Currently denies suicidal ideation, which reduces immediate urgency, but severity and risk profile warrant prompt evaluation.",
+      "recommended_action": "Initiate SSRI, refer for evidence-based psychotherapy (CBT), create safety plan, follow up within 1-2 weeks, provide crisis resources (988 Suicide and Crisis Lifeline)"
+    }
+  },
+  {
+    "note_id": "note_007",
+    "classification": {
+      "urgency_level": 4,
+      "urgency_label": "HIGH",
+      "primary_complaint": "Urosepsis with acute kidney injury",
+      "icd10_code": "A41.9",
+      "icd10_description": "Sepsis, unspecified organism",
+      "reasoning": "Elderly nursing home patient with UTI progressing to sepsis: fever, hypotension, tachycardia, elevated WBC and lactate (3.1 indicating tissue hypoperfusion), and acute kidney injury (creatinine doubled from baseline). Altered mental status from baseline represents end-organ dysfunction. High mortality risk in this demographic.",
+      "recommended_action": "Implement SEP-1 sepsis bundle: blood cultures x2, broad-spectrum antibiotics within 1 hour, 30mL/kg crystalloid bolus, repeat lactate at 4-6 hours, consider ICU admission for vasopressor support if unresponsive to fluids"
+    }
+  },
+  {
+    "note_id": "note_008",
+    "classification": {
+      "urgency_level": 4,
+      "urgency_label": "HIGH",
+      "primary_complaint": "New-onset decompensated heart failure",
+      "icd10_code": "I50.20",
+      "icd10_description": "Unspecified systolic (congestive) heart failure",
+      "reasoning": "Classic presentation of decompensated heart failure: progressive exertional dyspnea, orthopnea, PND, JVD, S3 gallop, bilateral pulmonary crackles, pitting edema, markedly elevated BNP (1840), cardiomegaly and pleural effusions on CXR. New diagnosis requiring urgent workup for etiology and initiation of guideline-directed medical therapy.",
+      "recommended_action": "Admit to telemetry, IV furosemide for diuresis, daily weights and strict I&Os, echocardiogram to determine EF and etiology, cardiology consult, assess for ischemic etiology with stress test or catheterization"
+    }
+  },
+  {
+    "note_id": "note_009",
+    "classification": {
+      "urgency_level": 5,
+      "urgency_label": "EMERGENT",
+      "primary_complaint": "Suspected acute leukemia with pancytopenia",
+      "icd10_code": "C95.00",
+      "icd10_description": "Acute leukemia of unspecified cell type not having achieved remission",
+      "reasoning": "16-year-old with pancytopenia (WBC 2.1, Hgb 7.2, platelets 18K) and 40% blasts on peripheral smear — this is acute leukemia until proven otherwise. Critical thrombocytopenia with active hemorrhagic symptoms (epistaxis, petechiae). Severe neutropenia (ANC 800) puts patient at high infection risk. Splenomegaly and elevated LDH support high disease burden.",
+      "recommended_action": "Emergent pediatric hematology/oncology consult, platelet transfusion for bleeding with PLT <20K, pRBC transfusion for symptomatic anemia, avoid IM injections, prepare for urgent bone marrow biopsy, tumor lysis labs and prophylaxis"
+    }
+  },
+  {
+    "note_id": "note_010",
+    "classification": {
+      "urgency_level": 3,
+      "urgency_label": "MODERATE",
+      "primary_complaint": "Progressive dysphagia with alarm features, concern for esophageal malignancy",
+      "icd10_code": "R13.10",
+      "icd10_description": "Dysphagia, unspecified",
+      "reasoning": "Progressive dysphagia from solids to liquids over 6 months with significant weight loss (22 lbs), cachexia, and history of Barrett esophagus with overdue surveillance. Combined with extensive smoking and alcohol history, this presentation is highly concerning for esophageal carcinoma. Hypoalbuminemia reflects malnutrition.",
+      "recommended_action": "Urgent EGD with biopsy within 1-2 weeks, CT chest/abdomen/pelvis for staging, nutritional assessment and supplementation, consider PEG tube if unable to maintain adequate oral intake"
+    }
+  },
+  {
+    "note_id": "note_011",
+    "classification": {
+      "urgency_level": 3,
+      "urgency_label": "MODERATE",
+      "primary_complaint": "Acute renal colic, recurrent nephrolithiasis",
+      "icd10_code": "N20.0",
+      "icd10_description": "Calculus of kidney",
+      "reasoning": "Classic renal colic presentation: acute severe colicky flank pain radiating to groin, restlessness, nausea/vomiting, and microscopic hematuria in a patient with known history of calcium oxalate stones. Hemodynamically stable with no signs of infection (afebrile, no pyuria). Requires imaging and pain control but not immediately life-threatening.",
+      "recommended_action": "CT abdomen/pelvis without contrast for stone size and location, IV ketorolac and opioid analgesics for pain, IV fluids, urology referral if stone >6mm or evidence of obstruction, strain urine"
+    }
+  },
+  {
+    "note_id": "note_012",
+    "classification": {
+      "urgency_level": 1,
+      "urgency_label": "ROUTINE",
+      "primary_complaint": "Well-child examination, 5-month-old, normal development",
+      "icd10_code": "Z00.129",
+      "icd10_description": "Encounter for routine child health examination without abnormal findings",
+      "reasoning": "Healthy 5-month-old with appropriate growth (50th percentile), meeting all developmental milestones (rolling, reaching, babbling, social smile), up-to-date immunizations, and no parental concerns. Completely routine preventive care visit.",
+      "recommended_action": "Anticipatory guidance on introduction of solid foods, sleep safety, developmental stimulation, continue immunization schedule, next well-child visit at 6 months"
+    }
+  },
+  {
+    "note_id": "note_013",
+    "classification": {
+      "urgency_level": 5,
+      "urgency_label": "EMERGENT",
+      "primary_complaint": "Thunderclap headache, concern for subarachnoid hemorrhage",
+      "icd10_code": "I60.9",
+      "icd10_description": "Nontraumatic subarachnoid hemorrhage, unspecified",
+      "reasoning": "Sudden onset worst headache of life with neck stiffness and severe hypertension is the classic presentation of subarachnoid hemorrhage (SAH) and must be treated as such until definitively excluded. Equivocal meningeal signs do not rule out SAH. Non-contrast CT head has ~95% sensitivity within 6 hours but negative CT requires LP for definitive exclusion.",
+      "recommended_action": "Emergent non-contrast CT head, if negative proceed to lumbar puncture, neurosurgery consult, BP management targeting SBP <160, CTA head/neck if SAH confirmed to identify aneurysm source"
+    }
+  },
+  {
+    "note_id": "note_014",
+    "classification": {
+      "urgency_level": 5,
+      "urgency_label": "EMERGENT",
+      "primary_complaint": "Severe COPD exacerbation with acute hypercapnic respiratory failure",
+      "icd10_code": "J44.1",
+      "icd10_description": "Chronic obstructive pulmonary disease with acute exacerbation",
+      "reasoning": "Severe COPD (FEV1 28%) with acute exacerbation complicated by respiratory failure: significant oxygen desaturation below baseline (84% vs 92%), respiratory acidosis (pH 7.31, pCO2 58), accessory muscle use, inability to speak full sentences, and failure of outpatient steroid therapy. Infectious trigger likely given purulent sputum, fever, and leukocytosis.",
+      "recommended_action": "Initiate BiPAP, continuous nebulized albuterol/ipratropium, IV methylprednisolone 125mg, empiric antibiotics covering respiratory pathogens, ICU admission, prepare for intubation if clinical deterioration or worsening acidosis"
+    }
+  },
+  {
+    "note_id": "note_015",
+    "classification": {
+      "urgency_level": 3,
+      "urgency_label": "MODERATE",
+      "primary_complaint": "New-onset seropositive rheumatoid arthritis",
+      "icd10_code": "M05.79",
+      "icd10_description": "Rheumatoid arthritis with rheumatoid factor of unspecified site",
+      "reasoning": "Young woman with symmetric inflammatory polyarthritis (MCPs, PIPs, wrists, knees), prolonged morning stiffness >2 hours, elevated RF (128) and highly positive anti-CCP (245), and elevated inflammatory markers. Classic presentation of seropositive RA. No erosions yet, suggesting early disease where prompt DMARD initiation can prevent irreversible joint damage.",
+      "recommended_action": "Urgent rheumatology referral within 2-4 weeks, baseline labs for DMARD therapy (CBC, CMP, hepatitis B/C), initiate methotrexate as first-line DMARD, bridge with low-dose prednisone for symptom relief"
+    }
+  },
+  {
+    "note_id": "note_016",
+    "classification": {
+      "urgency_level": 5,
+      "urgency_label": "EMERGENT",
+      "primary_complaint": "First-episode psychosis with dangerous behavior",
+      "icd10_code": "F29",
+      "icd10_description": "Unspecified psychosis not due to a substance or known physiological condition",
+      "reasoning": "22-year-old male with first-episode psychosis presenting with auditory hallucinations, paranoid delusions, disorganized thought, and 6-month prodromal period of functional decline. Found in traffic creating immediate safety risk. Negative urine drug screen excludes substance-induced psychosis. Presentation consistent with schizophrenia spectrum disorder requiring emergent psychiatric intervention.",
+      "recommended_action": "Psychiatric emergency evaluation, medical clearance (CBC, CMP, TSH, RPR, CT head), 1:1 observation for safety, initiate second-generation antipsychotic, evaluate for involuntary psychiatric hold if refusing voluntary admission"
+    }
+  },
+  {
+    "note_id": "note_017",
+    "classification": {
+      "urgency_level": 4,
+      "urgency_label": "HIGH",
+      "primary_complaint": "Diabetic foot ulcer with suspected osteomyelitis and peripheral arterial disease",
+      "icd10_code": "E11.621",
+      "icd10_description": "Type 2 diabetes mellitus with foot ulcer",
+      "reasoning": "Non-healing plantar ulcer probing to bone (positive probe-to-bone test has ~90% PPV for osteomyelitis in diabetic foot), surrounding cellulitis with purulent drainage, systemic signs of infection (fever, leukocytosis), markedly elevated inflammatory markers, and peripheral arterial disease (ABI 0.65). Combined with uncontrolled diabetes (glucose 342), this patient is at high risk for limb loss without aggressive intervention.",
+      "recommended_action": "Urgent surgical debridement consultation, vascular surgery assessment for revascularization, MRI foot for osteomyelitis extent, IV broad-spectrum antibiotics (vancomycin + piperacillin-tazobactam), insulin drip for glycemic control, wound cultures"
+    }
+  },
+  {
+    "note_id": "note_018",
+    "classification": {
+      "urgency_level": 2,
+      "urgency_label": "LOW",
+      "primary_complaint": "Progressive cognitive decline consistent with probable Alzheimer disease",
+      "icd10_code": "G30.9",
+      "icd10_description": "Alzheimer disease, unspecified",
+      "reasoning": "Insidious progressive memory loss over 18 months with instrumental ADL impairment (managing finances, medications) but preserved basic ADLs (dressing, bathing). MMSE 20/30 and MoCA 16/30 consistent with mild-to-moderate dementia. Reversible causes excluded (TSH, B12, RPR all normal). CT shows cortical atrophy without focal lesion. Pattern most consistent with Alzheimer disease.",
+      "recommended_action": "Neurology referral, consider cholinesterase inhibitor (donepezil 5mg daily), driving safety assessment, advance care planning, connect with Alzheimer Association resources, caregiver support evaluation"
+    }
+  },
+  {
+    "note_id": "note_019",
+    "classification": {
+      "urgency_level": 4,
+      "urgency_label": "HIGH",
+      "primary_complaint": "Active pulmonary tuberculosis",
+      "icd10_code": "A15.0",
+      "icd10_description": "Tuberculosis of lung",
+      "reasoning": "Classic active pulmonary TB presentation: chronic cough, weight loss, night sweats, low-grade fevers, travel to endemic region, strongly positive PPD (18mm), and CXR with upper lobe cavitary lesion and hilar lymphadenopathy. Failed empiric antibiotic therapy. Cavitary disease is highly infectious and requires immediate airborne precautions and public health notification.",
+      "recommended_action": "Airborne isolation immediately, sputum AFB smear and culture x3 (consecutive mornings), GeneXpert MTB/RIF for rapid confirmation, initiate RIPE therapy (rifampin, isoniazid, pyrazinamide, ethambutol), notify public health for contact investigation"
+    }
+  },
+  {
+    "note_id": "note_020",
+    "classification": {
+      "urgency_level": 4,
+      "urgency_label": "HIGH",
+      "primary_complaint": "New-onset atrial fibrillation with rapid ventricular response secondary to thyrotoxicosis",
+      "icd10_code": "I48.0",
+      "icd10_description": "Paroxysmal atrial fibrillation",
+      "reasoning": "New atrial fibrillation with RVR (rate 168) in the setting of uncontrolled Graves hyperthyroidism (TSH <0.01, free T4 4.8). Thyrotoxicosis is the likely precipitant given poor methimazole compliance. Currently hemodynamically stable but symptomatic. Sustained rapid rates increase risk of hemodynamic decompensation and tachycardia-mediated cardiomyopathy.",
+      "recommended_action": "IV beta-blocker for rate control (propranolol preferred in thyrotoxicosis for additional T4-to-T3 conversion inhibition), endocrinology consult, ensure methimazole compliance, assess CHA2DS2-VASc for anticoagulation need, monitor for thyroid storm (Burch-Wartofsky score)"
+    }
+  }
+]

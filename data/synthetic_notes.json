@@ -1,0 +1,102 @@
+[
+  {
+    "id": "note_001",
+    "note": "72-year-old male presenting to ED with sudden onset crushing substernal chest pain radiating to left arm, onset 40 minutes ago. Associated diaphoresis, nausea, and dyspnea. PMH: HTN, hyperlipidemia, DM2, prior CABG 8 years ago. Current meds: aspirin 81mg, atorvastatin 40mg, metoprolol 50mg BID, lisinopril 20mg, metformin 1000mg BID. Vitals: BP 88/56, HR 112, RR 24, SpO2 91% on RA. ECG shows ST elevation in leads V1-V4 with reciprocal changes in II, III, aVF. Troponin I 2.4 ng/mL (normal <0.04). Patient appears diaphoretic and in acute distress.",
+    "category": "cardiac_emergency"
+  },
+  {
+    "id": "note_002",
+    "note": "34-year-old female G2P1 at 32 weeks gestation presents with headache, blurred vision, and right upper quadrant pain for the past 6 hours. BP 168/108 on arrival, repeat 172/110. Significant bilateral lower extremity edema. Urine dipstick shows 3+ protein. Labs: platelets 98K, AST 186, ALT 204, creatinine 1.3 (baseline 0.6). Deep tendon reflexes 3+ with 2 beats of clonus bilaterally. Fetal heart tracing shows category I pattern.",
+    "category": "obstetric_emergency"
+  },
+  {
+    "id": "note_003",
+    "note": "8-year-old male brought by parents for 4-day history of sore throat and fever, max 102.4F. Decreased appetite but drinking fluids. No cough, no rhinorrhea. Exam: bilateral tonsillar enlargement with exudates, tender anterior cervical lymphadenopathy. No rash. Lungs clear. Rapid strep test positive. No known drug allergies. Weight 28kg. Immunizations up to date.",
+    "category": "pediatric_acute"
+  },
+  {
+    "id": "note_004",
+    "note": "56-year-old female presents for routine follow-up of type 2 diabetes diagnosed 8 years ago. Current A1C 7.1%, down from 7.6% six months ago. Home glucose logs show fasting 110-135, post-prandial 140-180. Current meds: metformin 1000mg BID, empagliflozin 10mg daily. No hypoglycemic episodes. Annual diabetic eye exam normal. Monofilament foot exam intact bilaterally. BMI 31.2. BP 128/78. Lipid panel: TC 195, LDL 108, HDL 52, TG 175.",
+    "category": "chronic_disease_management"
+  },
+  {
+    "id": "note_005",
+    "note": "28-year-old male brought by ambulance after high-speed motorcycle collision, estimated 60mph, ejected from motorcycle, no helmet. GCS 9 (E2V3M4). Large scalp laceration with active bleeding. Right pupil 6mm and sluggish, left 3mm and reactive. Battle sign noted. Obvious deformity of right femur. Abdominal distension and tenderness. BP 82/50, HR 132, RR 28. Two large-bore IVs placed, 1L NS bolus running. C-collar in place.",
+    "category": "trauma_emergency"
+  },
+  {
+    "id": "note_006",
+    "note": "42-year-old female referred by PCP for 6-week history of depressed mood, anhedonia, insomnia (sleeping 3-4 hours/night), 15-pound weight loss, difficulty concentrating at work, and feelings of worthlessness. Denies suicidal ideation, homicidal ideation, or psychotic symptoms. No prior psychiatric history. Recently divorced. Social supports limited - lives alone, estranged from family. PHQ-9 score 19 (severe). No substance use. No medical comorbidities.",
+    "category": "mental_health"
+  },
+  {
+    "id": "note_007",
+    "note": "78-year-old female brought from nursing home with altered mental status. Baseline is alert and oriented x3, now confused and lethargic. Staff reports decreased oral intake for 2 days. Temp 101.6F, BP 94/58, HR 104, RR 22, SpO2 95%. Exam: dry mucous membranes, suprapubic tenderness, foul-smelling cloudy urine in Foley bag. PMH: dementia (mild), HTN, osteoporosis, recurrent UTIs. Labs: WBC 18.2, lactate 3.1, UA positive for nitrites, leukocyte esterase, bacteria. Cr 1.8 (baseline 1.0).",
+    "category": "geriatric_acute"
+  },
+  {
+    "id": "note_008",
+    "note": "45-year-old male presents with 2-month history of progressive exertional dyspnea, now occurring with walking one block. Orthopnea (sleeps on 3 pillows). Bilateral ankle edema worsening over 3 weeks. PND occurring nightly. PMH: HTN poorly controlled, no prior cardiac history. Vitals: BP 152/96, HR 96, RR 20, SpO2 94%. Exam: JVD to angle of jaw, bilateral crackles to mid-lung fields, S3 gallop, 2+ pitting edema to knees. BNP 1840 pg/mL. CXR shows cardiomegaly and bilateral pleural effusions.",
+    "category": "cardiac_acute"
+  },
+  {
+    "id": "note_009",
+    "note": "16-year-old female brought by mother for evaluation of fatigue, pallor, and easy bruising for the past 3 weeks. Mother noticed petechiae on legs 5 days ago. Patient reports epistaxis twice in the past week, each lasting >20 minutes. No weight loss, no fevers, no night sweats. Exam: pale conjunctivae, scattered petechiae on lower extremities, 3cm spleen tip palpable. Labs: WBC 2.1 (ANC 800), Hgb 7.2, platelets 18K, peripheral smear shows 40% blasts. LDH 580.",
+    "category": "pediatric_emergency"
+  },
+  {
+    "id": "note_010",
+    "note": "62-year-old male with 6-month history of progressive difficulty swallowing, initially solids now liquids. Unintentional weight loss of 22 pounds. Reports sensation of food sticking in mid-chest. No odynophagia. PMH: GERD x 15 years, Barrett's esophagus diagnosed on EGD 3 years ago (last surveillance EGD overdue by 1 year). 40-pack-year smoking history, quit 5 years ago. Alcohol: 2-3 drinks daily for 30 years. Exam: cachectic appearing, BMI 19.8. Labs: Hgb 10.8, albumin 2.9.",
+    "category": "oncology_urgent"
+  },
+  {
+    "id": "note_011",
+    "note": "38-year-old male presents with severe right flank pain radiating to groin, acute onset 3 hours ago. Describes pain as 10/10, colicky, with associated nausea and one episode of vomiting. Restless, unable to find comfortable position. No fever, no dysuria, no hematuria noted by patient. PMH: kidney stones x 2 (last episode 2 years ago, 4mm calcium oxite stone passed spontaneously). Vitals: BP 148/92, HR 88, temp 98.6F. Exam: right CVA tenderness, no peritoneal signs. UA: 50+ RBCs, no WBCs, no bacteria.",
+    "category": "acute_non_emergent"
+  },
+  {
+    "id": "note_012",
+    "note": "5-month-old female brought by parents for well-child visit. Born full-term, uncomplicated vaginal delivery. Birth weight 3.2kg, current weight 6.8kg (50th percentile). Length 64cm (45th percentile). Head circumference 42cm (50th percentile). Breastfed exclusively, starting to show interest in solids. Developmental milestones: rolls both directions, reaches for objects, babbles, recognizes parents, social smile. Immunizations up to date per schedule. Parents report sleeping through the night. No concerns.",
+    "category": "well_child"
+  },
+  {
+    "id": "note_013",
+    "note": "55-year-old female presents with sudden onset worst headache of her life while gardening. Rates 10/10, occipital, with neck stiffness. One episode of vomiting. No loss of consciousness. No trauma. No prior history of migraines. PMH: HTN (poorly controlled, non-compliant with meds). Vitals: BP 198/112, HR 72, temp 98.4F. Neuro exam: alert, oriented, photophobic, nuchal rigidity on exam, no focal deficits. Kernig and Brudzinski signs equivocal.",
+    "category": "neurological_emergency"
+  },
+  {
+    "id": "note_014",
+    "note": "70-year-old male with known severe COPD (FEV1 28% predicted, on home O2 2L continuous) presents with 4-day worsening dyspnea, increased sputum production (now purulent, green), and subjective fever. Using accessory muscles at rest. Speaking in 2-3 word sentences. Current home medications: tiotropium, budesonide/formoterol, albuterol PRN, prednisone taper (started by PCP 2 days ago with no improvement). Vitals: BP 142/88, HR 108, RR 28, SpO2 84% on 2L (baseline SpO2 on 2L: 92%), Temp 101.4F. ABG on 4L: pH 7.31, pCO2 58, pO2 62, HCO3 28.",
+    "category": "respiratory_emergency"
+  },
+  {
+    "id": "note_015",
+    "note": "31-year-old female presents with 3-month history of joint pain and stiffness involving bilateral hands (MCP and PIP joints), wrists, and knees. Morning stiffness lasting >2 hours. Associated fatigue and low-grade fevers. Denies rash, oral ulcers, Raynaud phenomenon, dry eyes or mouth. Exam: boggy synovitis of bilateral MCPs 2-4, bilateral PIP 2-3, bilateral wrist swelling, bilateral knee effusions. Labs: ESR 68, CRP 4.2, RF 128 IU/mL (normal <14), anti-CCP 245 U/mL (normal <20), ANA negative. CBC and metabolic panel normal. Hand X-rays show periarticular osteopenia, no erosions yet.",
+    "category": "rheumatology_new_diagnosis"
+  },
+  {
+    "id": "note_016",
+    "note": "22-year-old male brought to ED by police after being found wandering in traffic, talking to people who were not present. Agitated, paranoid, states 'they put cameras in my teeth.' Unable to provide coherent history. Per collateral from roommate: progressive social withdrawal over 6 months, stopped attending classes, has been talking to himself, not sleeping for days. No prior psychiatric history. No known substance use per roommate. Vitals stable. Urine drug screen negative. Exam: disheveled, poor hygiene, tangential thought process, auditory hallucinations, paranoid delusions, flat affect.",
+    "category": "psychiatric_emergency"
+  },
+  {
+    "id": "note_017",
+    "note": "48-year-old male with poorly controlled type 2 diabetes (last A1C 11.2%) presents with a 2-week history of a non-healing wound on the plantar surface of his right foot. He stepped on a nail 3 weeks ago. Wound has been worsening with surrounding redness and foul-smelling drainage. He reports intermittent fevers. Exam: 3x2cm ulcer on right plantar surface probing to bone, surrounding erythema extending to mid-foot, malodorous purulent drainage, decreased sensation bilateral feet (monofilament absent at 4/10 sites). ABI 0.65 right. Temp 100.8F. WBC 16.4, ESR 92, CRP 8.4. Glucose 342.",
+    "category": "surgical_urgent"
+  },
+  {
+    "id": "note_018",
+    "note": "85-year-old female brought by daughter for evaluation of progressive memory loss over 18 months. Forgetting recent conversations, misplacing items, got lost driving to familiar grocery store last week. Daughter manages medications and finances as patient can no longer do so reliably. Still able to dress and bathe independently. No behavioral changes, no hallucinations, no gait disturbance. PMH: HTN, hypothyroidism, osteoarthritis. MMSE score 20/30 (lost points on recall, orientation to date, and visuospatial). MoCA 16/30. TSH normal, B12 normal, RPR non-reactive. CT head: generalized cortical atrophy, no masses or hydrocephalus.",
+    "category": "geriatric_cognitive"
+  },
+  {
+    "id": "note_019",
+    "note": "40-year-old female presents with 6 weeks of persistent dry cough, unintentional weight loss of 10 pounds, drenching night sweats, and low-grade fevers. Recently returned from a 3-month volunteer trip to Southeast Asia. No improvement with 10-day course of azithromycin from urgent care. PPD placed 3 days ago is 18mm induration. Exam: thin-appearing, temp 100.2F. Lung exam: decreased breath sounds and dullness to percussion at right apex. CXR shows right upper lobe cavitary lesion with surrounding infiltrate and right hilar lymphadenopathy.",
+    "category": "infectious_disease"
+  },
+  {
+    "id": "note_020",
+    "note": "52-year-old male presents with acute onset palpitations, lightheadedness, and mild chest discomfort that started 2 hours ago while at rest. No syncope. No prior history of arrhythmia. PMH: Hyperthyroidism (Graves disease) diagnosed 3 months ago, started on methimazole but admits poor compliance. Vitals: BP 138/82, HR 168 (irregular), RR 18, SpO2 98%. ECG shows irregularly irregular narrow-complex tachycardia with no discernible P waves, ventricular rate 168. No ST changes. TSH <0.01, free T4 4.8 (normal 0.8-1.8). Troponin negative.",
+    "category": "cardiac_acute"
+  }
+]
