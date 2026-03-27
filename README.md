@@ -1,5 +1,6 @@
 # Clinical Note Classifier
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-HuggingFace_Spaces-yellow?logo=huggingface&logoColor=white)](https://huggingface.co/spaces/kavoshm/clinical-note-classifier)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-412991?logo=openai&logoColor=white)](https://platform.openai.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
