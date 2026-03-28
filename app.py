@@ -1,3 +1,5 @@
+print("[STARTUP] app.py loading...", flush=True)
+
 """
 Clinical Note Classifier — Live Demo (Gradio)
 ===============================================
@@ -239,5 +241,5 @@ with gr.Blocks(title="Clinical Note Classifier") as demo:
     """)
 
 
-if __name__ == "__main__":
-    demo.launch()
+print("[STARTUP] Launching Gradio app...", flush=True)
+demo.launch()
