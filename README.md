@@ -1,3 +1,15 @@
+---
+title: Clinical Note Classifier
+emoji: 🏥
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+sdk_version: 5.23.0
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # Clinical Note Classifier
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-HuggingFace_Spaces-yellow?logo=huggingface&logoColor=white)](https://huggingface.co/spaces/kavoshm/clinical-note-classifier)
