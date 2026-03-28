@@ -9,7 +9,11 @@ and recommended actions.
 
 Supports two modes:
   - Demo mode: Uses pre-computed classifications (no API key needed)
-  - Live mode: Calls OpenAI API for real-time classification (requires key)
+  - Live mode: Calls OpenAI or Anthropic API for real-time classification (requires key)
+
+Supported providers:
+  - OpenAI (gpt-4o-mini) — select "OpenAI" and enter an sk-... key
+  - Anthropic (claude-sonnet-4-20250514) — select "Anthropic" and enter an sk-ant-... key
 
 Deploy to HuggingFace Spaces or run locally:
   pip install gradio
@@ -124,7 +128,7 @@ def format_result_html(classification: dict) -> str:
     """
 
 
-def classify_note(note_text: str, api_key: str) -> tuple[str, str]:
+def classify_note(note_text: str, provider: str, api_key: str) -> tuple[str, str]:
     """Classify a clinical note. Uses live API if key provided, else demo mode."""
     if not note_text or not note_text.strip():
         return "<p style='color:#888;'>Please enter a clinical note or select a sample.</p>", ""
@@ -136,16 +140,34 @@ def classify_note(note_text: str, api_key: str) -> tuple[str, str]:
             demo_note_id = nid
             break
 
+    # Determine if the API key looks valid for the selected provider
+    has_valid_key = False
+    if api_key and api_key.strip():
+        key = api_key.strip()
+        if provider == "OpenAI" and key.startswith("sk-"):
+            has_valid_key = True
+        elif provider == "Anthropic" and key.startswith("sk-ant-"):
+            has_valid_key = True
+
     # Try live classification if API key provided
-    if api_key and api_key.strip().startswith("sk-"):
+    if has_valid_key:
         try:
-            os.environ["OPENAI_API_KEY"] = api_key.strip()
+            key = api_key.strip()
+            if provider == "OpenAI":
+                os.environ["OPENAI_API_KEY"] = key
+                provider_name = "openai"
+                model = "gpt-4o-mini"
+            else:
+                os.environ["ANTHROPIC_API_KEY"] = key
+                provider_name = "anthropic"
+                model = "claude-sonnet-4-20250514"
+
             from src.classifier import ClinicalNoteClassifier
-            classifier = ClinicalNoteClassifier(model="gpt-4o-mini")
+            classifier = ClinicalNoteClassifier(model=model, provider=provider_name)
             result = classifier.classify_note(note_text)
             classification = result.model_dump()
             classification["urgency_label"] = result.urgency_label
-            mode = "Live classification via OpenAI gpt-4o-mini"
+            mode = f"Live classification via {provider} {model}"
             return format_result_html(classification), mode
         except Exception as e:
             if demo_note_id and demo_note_id in PRECOMPUTED:
@@ -159,7 +181,7 @@ def classify_note(note_text: str, api_key: str) -> tuple[str, str]:
 
     return (
         "<p style='color:#888;'>No API key provided and this note doesn't match a sample. "
-        "Enter an OpenAI API key for live classification, or select a sample note.</p>",
+        "Enter an API key for live classification, or select a sample note.</p>",
         "",
     )
 
@@ -205,8 +227,14 @@ with gr.Blocks(title="Clinical Note Classifier") as demo:
                 lines=10,
                 max_lines=20,
             )
+            provider_dropdown = gr.Dropdown(
+                choices=["OpenAI", "Anthropic"],
+                value="OpenAI",
+                label="LLM Provider",
+                info="Select OpenAI (gpt-4o-mini) or Anthropic (claude-sonnet-4-20250514)",
+            )
             api_key_input = gr.Textbox(
-                label="OpenAI API Key (optional)",
+                label="API Key (optional)",
                 placeholder="sk-... (leave blank for demo mode with pre-computed results)",
                 type="password",
             )
@@ -223,7 +251,7 @@ with gr.Blocks(title="Clinical Note Classifier") as demo:
     sample_dropdown.change(fn=load_sample, inputs=[sample_dropdown], outputs=[note_input])
     classify_btn.click(
         fn=classify_note,
-        inputs=[note_input, api_key_input],
+        inputs=[note_input, provider_dropdown, api_key_input],
         outputs=[result_html, mode_text],
     )
 
@@ -235,7 +263,7 @@ with gr.Blocks(title="Clinical Note Classifier") as demo:
                 100% urgency accuracy on 20 test cases · 85% ICD-10 exact match · 123 unit tests
             </p>
             <p style="font-size:12px; color:#b0b0b0; margin-top:4px;">
-                gpt-4o-mini · Temperature 0 · JSON Mode + Pydantic validation · Safety-first defaults (urgency 5 on error)
+                OpenAI gpt-4o-mini / Anthropic Claude Sonnet · Temperature 0 · JSON Mode + Pydantic validation · Safety-first defaults (urgency 5 on error)
             </p>
         </div>
     """)

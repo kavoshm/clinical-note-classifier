@@ -24,9 +24,14 @@ from typing import Optional
 from src.classifier import ClinicalNoteClassifier, load_notes_from_file
 from src.evaluate import run_evaluation, evaluate_classifications, print_evaluation_report, load_json
 from src.models import ClassifiedNote
+from src.providers import SUPPORTED_PROVIDERS
 
 
-def classify_single(note_text: str, model: str = "gpt-4o-mini") -> None:
+def classify_single(
+    note_text: str,
+    model: str = "gpt-4o-mini",
+    provider: str = "openai",
+) -> None:
     """Classify a single clinical note and print the result."""
     try:
         from rich.console import Console
@@ -38,7 +43,7 @@ def classify_single(note_text: str, model: str = "gpt-4o-mini") -> None:
     except ImportError:
         use_rich = False
 
-    classifier = ClinicalNoteClassifier(model=model)
+    classifier = ClinicalNoteClassifier(model=model, provider=provider)
 
     if use_rich:
         console.print("[bold]Classifying clinical note...[/bold]\n")
@@ -61,6 +66,7 @@ def classify_batch(
     input_path: str,
     output_dir: str,
     model: str = "gpt-4o-mini",
+    provider: str = "openai",
 ) -> None:
     """Classify all notes from an input file and save results."""
     try:
@@ -76,7 +82,7 @@ def classify_batch(
     output_path.mkdir(parents=True, exist_ok=True)
 
     notes = load_notes_from_file(input_path)
-    classifier = ClinicalNoteClassifier(model=model)
+    classifier = ClinicalNoteClassifier(model=model, provider=provider)
 
     if use_rich:
         console.print(f"[bold]Classifying {len(notes)} clinical notes...[/bold]\n")
@@ -164,13 +170,23 @@ Examples:
     # Classify single note
     classify_parser = subparsers.add_parser("classify", help="Classify a single clinical note")
     classify_parser.add_argument("--note", type=str, required=True, help="Clinical note text")
-    classify_parser.add_argument("--model", type=str, default="gpt-4o-mini", help="OpenAI model")
+    classify_parser.add_argument("--model", type=str, default="gpt-4o-mini", help="LLM model name")
+    classify_parser.add_argument(
+        "--provider", type=str, default="openai",
+        choices=list(SUPPORTED_PROVIDERS),
+        help="LLM provider (default: openai)",
+    )
 
     # Batch classify
     batch_parser = subparsers.add_parser("batch", help="Classify a batch of notes from file")
     batch_parser.add_argument("--input", type=str, required=True, help="Input JSON file path")
     batch_parser.add_argument("--output", type=str, required=True, help="Output directory path")
-    batch_parser.add_argument("--model", type=str, default="gpt-4o-mini", help="OpenAI model")
+    batch_parser.add_argument("--model", type=str, default="gpt-4o-mini", help="LLM model name")
+    batch_parser.add_argument(
+        "--provider", type=str, default="openai",
+        choices=list(SUPPORTED_PROVIDERS),
+        help="LLM provider (default: openai)",
+    )
 
     # Evaluate
     eval_parser = subparsers.add_parser("evaluate", help="Evaluate classifications against expected")
@@ -180,9 +196,9 @@ Examples:
     args = parser.parse_args()
 
     if args.command == "classify":
-        classify_single(args.note, args.model)
+        classify_single(args.note, args.model, args.provider)
     elif args.command == "batch":
-        classify_batch(args.input, args.output, args.model)
+        classify_batch(args.input, args.output, args.model, args.provider)
     elif args.command == "evaluate":
         run_evaluate(args.actual, args.expected)
     else:

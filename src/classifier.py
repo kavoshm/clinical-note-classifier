@@ -2,9 +2,9 @@
 Clinical Note Classifier — Core Engine
 ========================================
 Main classifier that takes free-text clinical notes and returns structured
-classifications using OpenAI's API. Supports single-note and batch
-classification with retry logic, error handling, and structured output
-validation via Pydantic.
+classifications using LLM APIs. Supports OpenAI and Anthropic providers.
+Includes single-note and batch classification with retry logic, error
+handling, and structured output validation via Pydantic.
 
 This is the heart of the 1-3 project, combining prompt engineering patterns
 from 1-1 and system building patterns from 1-2.
@@ -17,15 +17,30 @@ from typing import Optional
 from openai import OpenAI, APIError, RateLimitError, APITimeoutError
 from pydantic import ValidationError
 
+# Import Anthropic errors conditionally — the package is optional at import time
+# but required at runtime when provider="anthropic" is used.
+try:
+    import anthropic as _anthropic_module
+    AnthropicAPIError = _anthropic_module.APIError
+    AnthropicRateLimitError = _anthropic_module.RateLimitError
+    AnthropicAPITimeoutError = _anthropic_module.APITimeoutError
+except ImportError:
+    # If anthropic is not installed, create placeholder exception classes
+    # so the except clauses don't break when only OpenAI is used.
+    AnthropicAPIError = type("AnthropicAPIError", (Exception,), {})
+    AnthropicRateLimitError = type("AnthropicRateLimitError", (Exception,), {})
+    AnthropicAPITimeoutError = type("AnthropicAPITimeoutError", (Exception,), {})
+
 from src.logging_config import get_logger
 from src.models import ClassificationResult, ClassifiedNote, ClinicalNote
 from src.prompts import get_system_prompt, get_few_shot_examples, build_user_message
+from src.providers import get_completion, DEFAULT_MODELS, SUPPORTED_PROVIDERS
 
 logger = get_logger(__name__)
 
 
 class ClinicalNoteClassifier:
-    """Classifies clinical notes using OpenAI LLMs with structured output."""
+    """Classifies clinical notes using LLMs with structured output."""
 
     def __init__(
         self,
@@ -34,18 +49,24 @@ class ClinicalNoteClassifier:
         temperature: float = 0.0,
         max_retries: int = 3,
         retry_delay: float = 2.0,
+        provider: str = "openai",
     ) -> None:
         """
         Initialize the classifier.
 
         Args:
-            model: OpenAI model to use for classification.
+            model: Model to use for classification.
             prompt_version: Version of the prompt to use (for version tracking).
             temperature: Sampling temperature. Use 0 for deterministic output.
             max_retries: Maximum number of retry attempts on failure.
             retry_delay: Base delay between retries in seconds (exponential backoff).
+            provider: LLM provider — "openai" or "anthropic".
         """
-        self.client = OpenAI()
+        self.provider = provider
+        if provider == "openai":
+            self.client = OpenAI()
+        else:
+            self.client = None  # Anthropic client is created per-request in providers.py
         self.model = model
         self.prompt_version = prompt_version
         self.temperature = temperature
@@ -64,6 +85,7 @@ class ClinicalNoteClassifier:
                 "prompt_version": self.prompt_version,
                 "temperature": self.temperature,
                 "max_retries": self.max_retries,
+                "provider": self.provider,
             },
         )
 
@@ -88,17 +110,28 @@ class ClinicalNoteClassifier:
 
         for attempt in range(1, self.max_retries + 1):
             try:
-                response = self.client.chat.completions.create(
-                    model=self.model,
-                    temperature=self.temperature,
-                    response_format={"type": "json_object"},
-                    messages=[
-                        {"role": "system", "content": self._system_message},
-                        {"role": "user", "content": user_message},
-                    ],
-                )
+                if self.provider == "openai":
+                    # Use the OpenAI client directly (preserves original behavior)
+                    response = self.client.chat.completions.create(
+                        model=self.model,
+                        temperature=self.temperature,
+                        response_format={"type": "json_object"},
+                        messages=[
+                            {"role": "system", "content": self._system_message},
+                            {"role": "user", "content": user_message},
+                        ],
+                    )
+                    raw_content = response.choices[0].message.content
+                else:
+                    # Use the provider abstraction for non-OpenAI providers
+                    raw_content = get_completion(
+                        system_message=self._system_message,
+                        user_message=user_message,
+                        model=self.model,
+                        temperature=self.temperature,
+                        provider=self.provider,
+                    )
 
-                raw_content = response.choices[0].message.content
                 parsed = json.loads(raw_content)
                 result = ClassificationResult(**parsed)
                 logger.info(
@@ -130,7 +163,7 @@ class ClinicalNoteClassifier:
                     )
                 time.sleep(self.retry_delay * attempt)
 
-            except RateLimitError:
+            except (RateLimitError, AnthropicRateLimitError):
                 # Rate limited — wait and retry with exponential backoff
                 wait_time = self.retry_delay * (2 ** attempt)
                 logger.warning(
@@ -144,7 +177,7 @@ class ClinicalNoteClassifier:
                     )
                 time.sleep(wait_time)
 
-            except APITimeoutError:
+            except (APITimeoutError, AnthropicAPITimeoutError):
                 # API timeout — retry with backoff
                 logger.warning("API timeout", extra={"attempt": attempt})
                 if attempt == self.max_retries:
@@ -154,7 +187,7 @@ class ClinicalNoteClassifier:
                     )
                 time.sleep(self.retry_delay * attempt)
 
-            except APIError as e:
+            except (APIError, AnthropicAPIError) as e:
                 # Other API errors
                 logger.warning("API error", extra={"attempt": attempt, "error": str(e)})
                 if attempt == self.max_retries:

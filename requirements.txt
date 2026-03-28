@@ -1,4 +1,6 @@
+# See pyproject.toml for canonical dependency management
 openai>=1.12.0
+anthropic>=0.40.0
 python-dotenv>=1.0.0
 rich>=13.7.0
 pandas>=2.2.0

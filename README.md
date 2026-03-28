@@ -12,11 +12,14 @@ license: mit
 
 # Clinical Note Classifier
 
+[![CI](https://github.com/monfaredkavosh/clinical-note-classifier/actions/workflows/ci.yml/badge.svg)](https://github.com/monfaredkavosh/clinical-note-classifier/actions/workflows/ci.yml)
+
 **[Try the Live Demo](https://kavoshm-clinical-note-classifier.hf.space)** — Paste a clinical note and get structured triage output. No API key needed.
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-HuggingFace_Spaces-yellow?logo=huggingface&logoColor=white)](https://kavoshm-clinical-note-classifier.hf.space)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-412991?logo=openai&logoColor=white)](https://platform.openai.com/)
+[![Anthropic](https://img.shields.io/badge/Anthropic-Claude--Sonnet-d4a574?logo=anthropic&logoColor=white)](https://www.anthropic.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Pydantic v2](https://img.shields.io/badge/Pydantic-v2-e92063?logo=pydantic&logoColor=white)](https://docs.pydantic.dev/)
 
@@ -29,6 +32,25 @@ The system processes unstructured physician notes and returns validated, structu
 ## Architecture
 
 ![Pipeline Architecture](docs/images/pipeline_architecture.png)
+
+```mermaid
+flowchart TD
+    A["Clinical Note\n(free text)"] --> B["Prompt Assembly\n(system + few-shot + CoT)"]
+    B --> C["OpenAI API\ngpt-4o-mini, temp=0\nJSON mode"]
+    C --> D{"JSON Parse"}
+    D -- valid JSON --> E["Pydantic Validation\n(models.py)"]
+    D -- parse error --> F["Retry\n(exp. backoff, 3 attempts)"]
+    E -- valid --> G["Structured Output\nurgency + ICD-10 + reasoning"]
+    E -- validation error --> F
+    F -- retries remaining --> C
+    F -- retries exhausted --> H["Safety Fallback\nurgency=5 EMERGENT"]
+    C -- API error / rate limit --> F
+
+    style A fill:#e3f2fd,stroke:#1565c0
+    style G fill:#e8f5e9,stroke:#2e7d32
+    style H fill:#ffebee,stroke:#c62828
+    style F fill:#fff3e0,stroke:#e65100
+```
 
 The classification pipeline follows a five-stage flow:
 
@@ -56,7 +78,33 @@ A retry loop with exponential backoff (up to 3 attempts) handles transient API f
 - **Input Validation** detecting non-clinical content and prompt injection attempts
 - **Structured JSON Logging** for clinical audit trails and production monitoring
 - **Comprehensive Test Suite** with 123 pytest tests covering models, prompts, classifier, evaluation, and exports
+- **Multi-Provider Support** for OpenAI and Anthropic with a unified interface
 - **Rich CLI Output** with formatted tables, progress bars, and color-coded results
+
+---
+
+## Multi-Provider Support
+
+The classifier supports both **OpenAI** and **Anthropic** as LLM providers through a unified provider abstraction (`src/providers.py`). The provider can be selected via the `--provider` CLI flag or the provider dropdown in the Gradio web interface.
+
+| Provider | Default Model | API Key Env Var | JSON Mode |
+|----------|--------------|-----------------|-----------|
+| OpenAI | `gpt-4o-mini` | `OPENAI_API_KEY` | Native (`response_format=json_object`) |
+| Anthropic | `claude-sonnet-4-20250514` | `ANTHROPIC_API_KEY` | Prompt-enforced (system prompt instructs JSON output) |
+
+**CLI usage:**
+
+```bash
+# OpenAI (default -- no --provider flag needed)
+python -m src.main classify --note "Patient presents with..."
+
+# Anthropic
+python -m src.main classify --provider anthropic --model claude-sonnet-4-20250514 --note "Patient presents with..."
+```
+
+**Gradio web interface:** Select the provider from the "LLM Provider" dropdown and enter the corresponding API key.
+
+**Architecture note:** The provider abstraction is intentionally thin. OpenAI calls go through the OpenAI SDK directly (preserving native JSON mode), while Anthropic calls use the Anthropic SDK with its separate `system` parameter format. Provider-specific error types (rate limits, timeouts, API errors) are all handled by the existing retry logic.
 
 ---
 
@@ -65,7 +113,7 @@ A retry loop with exponential backoff (up to 3 attempts) handles transient API f
 ### Prerequisites
 
 - Python 3.11+
-- An OpenAI API key
+- An OpenAI API key **or** an Anthropic API key (at least one)
 
 ### Installation
 
@@ -80,10 +128,12 @@ source .venv/bin/activate   # On Windows: .venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Set your API key
+# Set your API key (one or both)
 export OPENAI_API_KEY="sk-your-key-here"
+export ANTHROPIC_API_KEY="sk-ant-your-key-here"
 # Or create a .env file:
 echo "OPENAI_API_KEY=sk-your-key-here" > .env
+echo "ANTHROPIC_API_KEY=sk-ant-your-key-here" >> .env
 ```
 
 ---
@@ -93,13 +143,21 @@ echo "OPENAI_API_KEY=sk-your-key-here" > .env
 ### Classify a Single Note
 
 ```bash
+# Using OpenAI (default)
 python -m src.main classify --note "72-year-old male with acute chest pain radiating to left arm, diaphoresis, ST elevation on ECG, troponin 2.4. BP 88/56, HR 112."
+
+# Using Anthropic
+python -m src.main classify --provider anthropic --model claude-sonnet-4-20250514 --note "72-year-old male with acute chest pain radiating to left arm, diaphoresis, ST elevation on ECG, troponin 2.4. BP 88/56, HR 112."
 ```
 
 ### Batch Classification (All 20 Notes)
 
 ```bash
+# Using OpenAI (default)
 python -m src.main batch --input data/synthetic_notes.json --output outputs/
+
+# Using Anthropic
+python -m src.main batch --provider anthropic --model claude-sonnet-4-20250514 --input data/synthetic_notes.json --output outputs/
 ```
 
 This processes all 20 synthetic clinical notes and saves:
@@ -196,7 +254,8 @@ clinical-note-classifier/
 ├── requirements.txt                   # Python dependencies
 ├── data/
 │   ├── synthetic_notes.json           # 20 synthetic clinical notes (input)
-│   └── expected_outputs.json          # Ground-truth classifications
+│   ├── expected_outputs.json          # Ground-truth classifications
+│   └── mtsamples_sample.json          # 50 MTSamples notes for public dataset validation
 ├── outputs/
 │   ├── sample_classification.json     # Classifier output (full structured JSON)
 │   └── batch_results.csv             # Summary table (CSV)
@@ -204,13 +263,15 @@ clinical-note-classifier/
 │   ├── __init__.py
 │   ├── main.py                        # CLI entry point (classify, batch, evaluate)
 │   ├── classifier.py                  # Core classification engine with retry logic
+│   ├── providers.py                   # LLM provider abstraction (OpenAI, Anthropic)
 │   ├── prompts.py                     # All prompts with versioning and history
 │   ├── models.py                      # Pydantic data models (validation layer)
 │   ├── evaluate.py                    # Evaluation against expected outputs
 │   ├── validation.py                  # Clinical content input validation
 │   └── logging_config.py             # Structured JSON logging configuration
 ├── scripts/
-│   └── generate_figures.py            # Matplotlib script for README visualizations
+│   ├── generate_figures.py            # Matplotlib script for README visualizations
+│   └── run_mtsamples.py              # MTSamples public dataset validation script
 ├── docs/
 │   └── images/
 │       ├── urgency_distribution.png   # Urgency level bar chart
@@ -313,7 +374,7 @@ This project uses **synthetic clinical notes only** -- no real Protected Health 
 
 **Data Handling:**
 - All PHI must be encrypted at rest (AES-256) and in transit (TLS 1.2+).
-- Clinical notes sent to the OpenAI API would constitute PHI transmission to a third party. A Business Associate Agreement (BAA) with OpenAI would be required under HIPAA. Alternatively, use a self-hosted model (e.g., fine-tuned Llama, Mistral) to keep PHI on-premises.
+- Clinical notes sent to the OpenAI or Anthropic API would constitute PHI transmission to a third party. A Business Associate Agreement (BAA) with the provider would be required under HIPAA. Alternatively, use a self-hosted model (e.g., fine-tuned Llama, Mistral) to keep PHI on-premises.
 - API keys and credentials must never be stored in code or version control. Use a secrets manager (AWS Secrets Manager, HashiCorp Vault).
 
 **Audit Logging:**
@@ -418,6 +479,110 @@ The test suite (123 tests) covers:
 - **CSV/JSON export** -- header correctness, data integrity, roundtrip serialization
 - **Input validation** -- clinical content detection, prompt injection, edge cases
 - **Structured logging** -- JSON format, field presence, extra fields, exception handling
+
+---
+
+## Docker
+
+### Build the Image
+
+```bash
+docker build -t clinical-note-classifier .
+```
+
+### Run with Docker
+
+```bash
+# Demo mode (no API key needed -- uses pre-computed results)
+docker run -p 7860:7860 clinical-note-classifier
+
+# Live mode with OpenAI
+docker run -p 7860:7860 -e OPENAI_API_KEY=sk-your-key-here clinical-note-classifier
+
+# Live mode with Anthropic
+docker run -p 7860:7860 -e ANTHROPIC_API_KEY=sk-ant-your-key-here clinical-note-classifier
+```
+
+Access the Gradio interface at [http://localhost:7860](http://localhost:7860).
+
+### Run with Docker Compose
+
+```bash
+# Set your API key (optional -- one or both)
+export OPENAI_API_KEY=sk-your-key-here
+export ANTHROPIC_API_KEY=sk-ant-your-key-here
+
+# Build and start
+docker compose up --build
+
+# Run in detached mode
+docker compose up -d
+
+# Stop
+docker compose down
+```
+
+---
+
+## Public Dataset Validation (MTSamples)
+
+Beyond the 20 synthetic clinical notes, the classifier has been validated against the [MTSamples](https://www.mtsamples.com/) public dataset -- a collection of 4,999 de-identified medical transcription samples released under a CC0 license. This provides an independent, real-world test of the classifier on notes it was never designed for.
+
+### Dataset and Sampling
+
+MTSamples covers 40 medical specialties. For urgency classification validation, we select a stratified sample of **50 notes** across the 10 most urgency-relevant specialties:
+
+| Specialty | Notes Sampled |
+|---|---|
+| Emergency Room Reports | 8 |
+| Cardiovascular / Pulmonary | 7 |
+| General Medicine | 7 |
+| Discharge Summary | 6 |
+| Neurology | 5 |
+| Gastroenterology | 4 |
+| Hematology - Oncology | 4 |
+| Nephrology | 3 |
+| Psychiatry / Psychology | 3 |
+| Pediatrics - Neonatal | 3 |
+
+The sample is reproducible (seeded random selection) and stored at `data/mtsamples_sample.json` in the same format as the synthetic notes.
+
+### Running the Validation
+
+```bash
+# Step 1: Download MTSamples CSV (CC0 license) to /tmp/mtsamples.csv
+# Available from: https://www.kaggle.com/datasets/tboyle10/medicaltranscriptions
+
+# Step 2: Run the validation script
+python scripts/run_mtsamples.py
+
+# Or use the pre-built sample (no CSV download needed):
+python scripts/run_mtsamples.py --use-sample
+
+# Or use the standard batch command:
+python -m src.main batch --input data/mtsamples_sample.json --output outputs/
+```
+
+The script will:
+1. Load and sample 50 notes from the MTSamples CSV (or use the pre-built sample)
+2. Run classification on each note using the configured LLM provider
+3. Save results to `outputs/mtsamples_results.csv` and `outputs/mtsamples_classification.json`
+4. Print a summary table showing urgency distribution by specialty
+
+**Note:** An `OPENAI_API_KEY` (or `ANTHROPIC_API_KEY` with `--provider anthropic`) is required for classification. If no key is available, the script prepares the sample data and exits with instructions.
+
+### Results
+
+Classification results are not included in the repository because they require an API call to generate. After running the validation, results are saved to:
+- `outputs/mtsamples_results.csv` -- summary with columns: id, specialty, note_preview, urgency, icd10_code, confidence_reasoning
+- `outputs/mtsamples_classification.json` -- full structured classification output
+
+To generate results, set your API key and run:
+
+```bash
+export OPENAI_API_KEY="sk-your-key-here"
+python scripts/run_mtsamples.py --use-sample
+```
 
 ---
 

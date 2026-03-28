@@ -1,0 +1,31 @@
+# =============================================================================
+# Clinical Note Classifier — Docker Compose
+# =============================================================================
+# Runs the Gradio web interface for clinical note classification.
+#
+# Usage:
+#   docker compose up --build          # Build and start the app
+#   docker compose up -d               # Start in detached mode
+#   docker compose down                # Stop and remove containers
+#
+# Access the app at: http://localhost:7860
+# =============================================================================
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7860:7860"
+    environment:
+      # Pass your OpenAI API key for live classification mode.
+      # Leave unset to use demo mode with pre-computed results.
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:7860/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
